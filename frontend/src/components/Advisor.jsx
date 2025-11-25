@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://backend-qlw90d2b8-dollaransh17s-projects.vercel.app';
 
 export default function Advisor() {
   const { t, i18n } = useTranslation();
@@ -31,7 +34,7 @@ export default function Advisor() {
 
   const currentQuestions = quickQuestions[i18n.language] || quickQuestions.en;
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
     
     const userMsg = { role: 'user', text: input, time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) };
@@ -40,60 +43,54 @@ export default function Advisor() {
     setInput('');
     setIsTyping(true);
     
-    setTimeout(() => {
-      let botResponse = '';
-      const lowerInput = currentInput.toLowerCase();
-      
+    try {
       // Detect language from user input
       const hasHindi = /[\u0900-\u097F]/.test(currentInput) || 
-                      lowerInput.includes('mujhe') || 
-                      lowerInput.includes('chahiye') || 
-                      lowerInput.includes('kaise') || 
-                      lowerInput.includes('kya') || 
-                      lowerInput.includes('mera');
+                      currentInput.toLowerCase().includes('mujhe') || 
+                      currentInput.toLowerCase().includes('chahiye') || 
+                      currentInput.toLowerCase().includes('kaise') || 
+                      currentInput.toLowerCase().includes('kya') || 
+                      currentInput.toLowerCase().includes('mera');
       const hasKannada = /[\u0C80-\u0CFF]/.test(currentInput) || 
-                        lowerInput.includes('nanu') || 
-                        lowerInput.includes('beku') || 
-                        lowerInput.includes('hege');
+                        currentInput.toLowerCase().includes('nanu') || 
+                        currentInput.toLowerCase().includes('beku') || 
+                        currentInput.toLowerCase().includes('hege');
       
       // Determine response language: user input language > selected UI language
       const responseLang = hasHindi ? 'hi' : hasKannada ? 'kn' : i18n.language;
       
-      if (lowerInput.includes('eligible') || lowerInput.includes('पात्र') || lowerInput.includes('ಅರ್ಹ')) {
-        botResponse = responseLang === 'en'
-          ? "✅ Yes! Based on your ₹45,000 monthly income and ₹32,000 expenses, you're eligible for loans up to ₹2,00,000.\n\n📊 Your eligibility score: 72/100\n💡 You can safely borrow up to ₹50,000 without financial stress."
-          : responseLang === 'hi'
-          ? "✅ हां! आपकी ₹45,000 मासिक आय और ₹32,000 खर्चों के आधार पर, आप ₹2,00,000 तक के ऋण के लिए पात्र हैं।\n\n📊 आपका पात्रता स्कोर: 72/100\n💡 आप बिना वित्तीय तनाव के ₹50,000 तक सुरक्षित रूप से उधार ले सकते हैं।"
-          : "✅ ಹೌದು! ನಿಮ್ಮ ₹45,000 ಮಾಸಿಕ ಆದಾಯ ಮತ್ತು ₹32,000 ವೆಚ್ಚಗಳ ಆಧಾರದ ಮೇಲೆ, ನೀವು ₹2,00,000 ವರೆಗೆ ಸಾಲಕ್ಕೆ ಅರ್ಹರಾಗಿದ್ದೀರಿ.\n\n📊 ನಿಮ್ಮ ಅರ್ಹತೆ ಸ್ಕೋರ್: 72/100\n💡 ನೀವು ಹಣಕಾಸಿನ ಒತ್ತಡವಿಲ್ಲದೆ ₹50,000 ವರೆಗೆ ಸುರಕ್ಷಿತವಾಗಿ ಸಾಲ ಪಡೆಯಬಹುದು.";
-      } else if (lowerInput.includes('borrow') || lowerInput.includes('loan') || lowerInput.includes('उधार') || lowerInput.includes('ऋण') || lowerInput.includes('chahiye') || lowerInput.includes('चाहिए') || lowerInput.includes('ಸಾಲ') || lowerInput.includes('ಬೇಕು')) {
-        botResponse = responseLang === 'en'
-          ? "💰 You can borrow between ₹20,000 to ₹2,00,000.\n\n🏆 Recommended amount: ₹50,000\n📅 Suggested tenure: 12-18 months\n💵 EMI: ₹4,200-4,500/month\n\n🏦 Best lenders: MoneyTap (13% APR), PaySense (16% APR)"
-          : responseLang === 'hi'
-          ? "💰 आप ₹20,000 से ₹2,00,000 तक उधार ले सकते हैं।\n\n🏆 अनुशंसित राशि: ₹50,000\n📅 सुझाई गई अवधि: 12-18 महीने\n💵 EMI: ₹4,200-4,500/माह\n\n🏦 सर्वश्रेष्ठ ऋणदाता: MoneyTap (13% APR), PaySense (16% APR)"
-          : "💰 ನೀವು ₹20,000 ರಿಂದ ₹2,00,000 ವರೆಗೆ ಸಾಲ ಪಡೆಯಬಹುದು.\n\n🏆 ಶಿಫಾರಸು ಮೊತ್ತ: ₹50,000\n📅 ಸೂಚಿಸಿದ ಅವಧಿ: 12-18 ತಿಂಗಳುಗಳು\n💵 EMI: ₹4,200-4,500/ತಿಂಗಳು\n\n🏦 ಉತ್ತಮ ಸಾಲದಾತರು: MoneyTap (13% APR), PaySense (16% APR)";
-      } else if (lowerInput.includes('credit') || lowerInput.includes('score') || lowerInput.includes('स्कोर') || lowerInput.includes('ಸ್ಕೋರ್')) {
-        botResponse = responseLang === 'en'
-          ? "⭐ Tips to improve your credit score:\n\n1️⃣ Pay all EMIs on time (most important!)\n2️⃣ Keep credit utilization below 30%\n3️⃣ Don't apply for multiple loans at once\n4️⃣ Maintain older credit accounts\n5️⃣ Check credit report regularly for errors\n\n📈 Your current financial health: 72/100 - Good!"
-          : responseLang === 'hi'
-          ? "⭐ अपना क्रेडिट स्कोर सुधारने के टिप्स:\n\n1️⃣ सभी EMI समय पर भुगतान करें (सबसे महत्वपूर्ण!)\n2️⃣ क्रेडिट उपयोग 30% से कम रखें\n3️⃣ एक साथ कई ऋणों के लिए आवेदन न करें\n4️⃣ पुराने क्रेडिट खाते बनाए रखें\n5️⃣ त्रुटियों के लिए नियमित रूप से क्रेडिट रिपोर्ट जांचें\n\n📈 आपका वर्तमान वित्तीय स्वास्थ्य: 72/100 - अच्छा!"
-          : "⭐ ನಿಮ್ಮ ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಸುಧಾರಿಸಲು ಸಲಹೆಗಳು:\n\n1️⃣ ಎಲ್ಲಾ EMI ಗಳನ್ನು ಸಮಯಕ್ಕೆ ಪಾವತಿಸಿ (ಅತ್ಯಂತ ಮುಖ್ಯ!)\n2️⃣ ಕ್ರೆಡಿಟ್ ಬಳಕೆಯನ್ನು 30% ಕ್ಕಿಂತ ಕಡಿಮೆ ಇರಿಸಿ\n3️⃣ ಏಕಕಾಲದಲ್ಲಿ ಹಲವು ಸಾಲಗಳಿಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಬೇಡಿ\n4️⃣ ಹಳೆಯ ಕ್ರೆಡಿಟ್ ಖಾತೆಗಳನ್ನು ನಿರ್ವಹಿಸಿ\n5️⃣ ದೋಷಗಳಿಗಾಗಿ ನಿಯಮಿತವಾಗಿ ಕ್ರೆಡಿಟ್ ವರದಿಯನ್ನು ಪರಿಶೀಲಿಸಿ\n\n📈 ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಹಣಕಾಸು ಆರೋಗ್ಯ: 72/100 - ಉತ್ತಮ!";
-      } else if (lowerInput.includes('save') || lowerInput.includes('savings') || lowerInput.includes('बचत') || lowerInput.includes('ಉಳಿತಾಯ')) {
-        botResponse = responseLang === 'en'
-          ? "💡 Smart Savings Tips:\n\n✅ You're saving ₹13,000/month (29%) - Great job!\n\n📌 Recommendations:\n• Set up auto-debit SIP for ₹3,000/month\n• Emergency fund target: ₹1,35,000 (3 months expenses)\n• Consider flexi deposits for better returns\n\n🎯 If you save ₹15k/month, you'll have ₹1.8L in 1 year!"
-          : responseLang === 'hi'
-          ? "💡 स्मार्ट बचत टिप्स:\n\n✅ आप ₹13,000/माह (29%) बचा रहे हैं - बढ़िया काम!\n\n📌 सिफारिशें:\n• ₹3,000/माह के लिए ऑटो-डेबिट SIP सेट करें\n• आपातकालीन फंड लक्ष्य: ₹1,35,000 (3 महीने के खर्च)\n• बेहतर रिटर्न के लिए फ्लेक्सी डिपॉजिट पर विचार करें\n\n🎯 यदि आप ₹15k/माह बचाते हैं, तो 1 साल में आपके पास ₹1.8L होंगे!"
-          : "💡 ಬುದ್ಧಿವಂತ ಉಳಿತಾಯ ಸಲಹೆಗಳು:\n\n✅ ನೀವು ₹13,000/ತಿಂಗಳು (29%) ಉಳಿಸುತ್ತಿದ್ದೀರಿ - ಅದ್ಭುತ!\n\n📌 ಶಿಫಾರಸುಗಳು:\n• ₹3,000/ತಿಂಗಳಿಗೆ ಆಟೋ-ಡೆಬಿಟ್ SIP ಹೊಂದಿಸಿ\n• ತುರ್ತು ನಿಧಿ ಗುರಿ: ₹1,35,000 (3 ತಿಂಗಳ ವೆಚ್ಚಗಳು)\n• ಉತ್ತಮ ಆದಾಯಕ್ಕಾಗಿ ಫ್ಲೆಕ್ಸಿ ಠೇವಣಿಗಳನ್ನು ಪರಿಗಣಿಸಿ\n\n🎯 ನೀವು ₹15k/ತಿಂಗಳು ಉಳಿಸಿದರೆ, 1 ವರ್ಷದಲ್ಲಿ ನೀವು ₹1.8L ಹೊಂದಿರುತ್ತೀರಿ!";
-      } else {
-        botResponse = responseLang === 'en'
-          ? "👋 Hello! I'm your AI financial advisor.\n\nI can help you with:\n✅ Loan eligibility & recommendations\n✅ Borrowing limits & EMI calculations\n✅ Credit score improvement tips\n✅ Savings & investment advice\n\n💬 Ask me anything in English, Hindi, or Kannada!"
-          : responseLang === 'hi'
-          ? "👋 नमस्ते! मैं आपका AI वित्तीय सलाहकार हूं।\n\nमैं आपकी मदद कर सकता हूं:\n✅ ऋण पात्रता और सिफारिशें\n✅ उधार सीमा और EMI गणना\n✅ क्रेडिट स्कोर सुधार टिप्स\n✅ बचत और निवेश सलाह\n\n💬 मुझसे अंग्रेजी, हिंदी या कन्नड़ में कुछ भी पूछें!"
-          : "👋 ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ AI ಹಣಕಾಸು ಸಲಹೆಗಾರ.\n\nನಾನು ನಿಮಗೆ ಸಹಾಯ ಮಾಡಬಲ್ಲೆ:\n✅ ಸಾಲ ಅರ್ಹತೆ ಮತ್ತು ಶಿಫಾರಸುಗಳು\n✅ ಸಾಲದ ಮಿತಿಗಳು ಮತ್ತು EMI ಲೆಕ್ಕಾಚಾರಗಳು\n✅ ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಸುಧಾರಣೆ ಸಲಹೆಗಳು\n✅ ಉಳಿತಾಯ ಮತ್ತು ಹೂಡಿಕೆ ಸಲಹೆ\n\n💬 ನನ್ನನ್ನು ಇಂಗ್ಲಿಷ್, ಹಿಂದಿ ಅಥವಾ ಕನ್ನಡದಲ್ಲಿ ಏನು ಬೇಕಾದರೂ ಕೇಳಿ!";
-      }
+      // Call backend API
+      const response = await axios.post(`${API_URL}/api/advisor/chat`, {
+        message: currentInput,
+        language: responseLang
+      });
       
-      setMessages(prev => [...prev, { role: 'bot', text: botResponse, time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) }]);
+      const botResponse = response.data.response;
+      
+      setMessages(prev => [...prev, { 
+        role: 'bot', 
+        text: botResponse, 
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) 
+      }]);
       setIsTyping(false);
-    }, 1200 + Math.random() * 800);
+      
+    } catch (error) {
+      console.error('Error calling AI advisor:', error);
+      
+      // Fallback to basic response if API fails
+      const fallbackResponses = {
+        en: "💬 I'm having trouble connecting right now. Please try again in a moment!",
+        hi: "💬 मुझे अभी कनेक्ट करने में परेशानी हो रही है। कृपया एक क्षण में पुनः प्रयास करें!",
+        kn: "💬 ನನಗೆ ಈಗ ಸಂಪರ್ಕಿಸಲು ಸಮಸ್ಯೆ ಇದೆ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!"
+      };
+      
+      setMessages(prev => [...prev, { 
+        role: 'bot', 
+        text: fallbackResponses[i18n.language] || fallbackResponses.en,
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) 
+      }]);
+      setIsTyping(false);
+    }
   };
 
   const handleQuickQuestion = (question) => {

@@ -71,6 +71,29 @@
   to { transform: rotate(360deg); }
 }
 
+/* Glowing text animation */
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px rgba(59, 130, 246, 0.5),
+      0 0 20px rgba(59, 130, 246, 0.3),
+      0 0 30px rgba(59, 130, 246, 0.2),
+      0 0 40px rgba(147, 51, 234, 0.1);
+  }
+  50% {
+    text-shadow: 
+      0 0 20px rgba(59, 130, 246, 0.8),
+      0 0 30px rgba(59, 130, 246, 0.6),
+      0 0 40px rgba(59, 130, 246, 0.4),
+      0 0 50px rgba(147, 51, 234, 0.3),
+      0 0 60px rgba(147, 51, 234, 0.2);
+  }
+}
+
+.glow-text {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
 .rotate-slow {
   animation: rotate-slow 30s linear infinite;
 }

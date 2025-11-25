@@ -69,9 +69,9 @@ export default function BusinessModel() {
   const revenueStreams = [
     {
       icon: '🤖',
-      title: 'WhatsApp Bot API',
-      revenue: '₹99/user/month',
-      description: 'White-label WhatsApp bot for banks & fintechs',
+      titleKey: 'whatsapp_bot_api',
+      revenueKey: 'whatsapp_bot_price',
+      descKey: 'whatsapp_bot_desc',
       details: [
         'Automated SMS parsing via WhatsApp',
         'Multilingual conversational AI',
@@ -83,9 +83,9 @@ export default function BusinessModel() {
     },
     {
       icon: '🔌',
-      title: 'B2B API Platform',
-      revenue: '₹0.50-2/API call',
-      description: 'Financial intelligence APIs for developers',
+      titleKey: 'b2b_api_platform',
+      revenueKey: 'b2b_api_price',
+      descKey: 'b2b_api_desc',
       details: [
         'SMS transaction parsing API',
         'Credit scoring algorithm',
@@ -97,9 +97,9 @@ export default function BusinessModel() {
     },
     {
       icon: '💰',
-      title: 'Loan Referral Fees',
-      revenue: '1-3% of loan amount',
-      description: 'Commission from lender partnerships',
+      titleKey: 'loan_referral_fees',
+      revenueKey: 'loan_referral_price',
+      descKey: 'loan_referral_desc',
       details: [
         'Lead generation for lenders',
         'Pre-verified customer data',
@@ -111,9 +111,9 @@ export default function BusinessModel() {
     },
     {
       icon: '📊',
-      title: 'Data Analytics SaaS',
-      revenue: '₹499-4,999/month',
-      description: 'Gig economy insights dashboard',
+      titleKey: 'data_analytics_saas',
+      revenueKey: 'data_analytics_price',
+      descKey: 'data_analytics_desc',
       details: [
         'Aggregate spending patterns',
         'Income stability metrics',
@@ -125,9 +125,9 @@ export default function BusinessModel() {
     },
     {
       icon: '🎓',
-      title: 'Financial Literacy Platform',
-      revenue: '₹49-199/course',
-      description: 'Micro-courses for gig workers',
+      titleKey: 'financial_literacy',
+      revenueKey: 'financial_literacy_price',
+      descKey: 'financial_literacy_desc',
       details: [
         'Regional language video courses',
         'Certificate programs',
@@ -139,9 +139,9 @@ export default function BusinessModel() {
     },
     {
       icon: '🏢',
-      title: 'Enterprise Licensing',
-      revenue: '₹5L-50L/year',
-      description: 'White-label platform for large orgs',
+      titleKey: 'enterprise_licensing',
+      revenueKey: 'enterprise_licensing_price',
+      descKey: 'enterprise_licensing_desc',
       details: [
         'Custom branding & deployment',
         'On-premise installation',
@@ -310,8 +310,8 @@ _Need human help? Call 1800-XXX-XXXX_`;
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Business Model & Revenue Streams</h2>
-          <p className="text-xl text-gray-600">Multiple monetization channels for sustainable growth</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('business_model_title')}</h2>
+          <p className="text-xl text-gray-600">{t('revenue_streams_subtitle')}</p>
         </div>
 
         {/* Revenue Streams Grid */}
@@ -319,12 +319,12 @@ _Need human help? Call 1800-XXX-XXXX_`;
           {revenueStreams.map((stream, idx) => (
             <div key={idx} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition transform hover:scale-105">
               <div className="text-4xl mb-4">{stream.icon}</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{stream.title}</h3>
-              <div className="text-2xl font-bold text-green-600 mb-3">{stream.revenue}</div>
-              <p className="text-gray-600 mb-4">{stream.description}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{t(stream.titleKey)}</h3>
+              <div className="text-2xl font-bold text-green-600 mb-3">{t(stream.revenueKey)}</div>
+              <p className="text-gray-600 mb-4">{t(stream.descKey)}</p>
               
               <div className="border-t border-gray-200 pt-4 mb-4">
-                <p className="text-sm font-semibold text-gray-700 mb-2">Key Features:</p>
+                <p className="text-sm font-semibold text-gray-700 mb-2">{t('key_features')}:</p>
                 <ul className="space-y-1">
                   {stream.details.map((detail, i) => (
                     <li key={i} className="text-sm text-gray-600 flex items-start">
@@ -337,7 +337,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
               
               <div className="bg-blue-50 rounded-lg p-3">
                 <p className="text-xs text-gray-700">
-                  <strong>Market:</strong> {stream.market}
+                  <strong>{t('market')}:</strong> {stream.market}
                 </p>
               </div>
             </div>
@@ -348,8 +348,8 @@ _Need human help? Call 1800-XXX-XXXX_`;
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-8 mb-16 text-white shadow-2xl">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-3xl font-bold mb-2">WhatsApp Bot Integration - Live Demo</h3>
-              <p className="text-lg opacity-90">100M+ WhatsApp users in India - Zero app install friction</p>
+              <h3 className="text-3xl font-bold mb-2">{t('whatsapp_demo')}</h3>
+              <p className="text-lg opacity-90">{t('whatsapp_subtitle')}</p>
             </div>
             <div className="text-6xl">💬</div>
           </div>
@@ -369,8 +369,8 @@ _Need human help? Call 1800-XXX-XXXX_`;
             <div className="bg-gray-50 p-6 h-96 overflow-y-auto">
               {chatMessages.length === 0 && (
                 <div className="text-center text-gray-500 mt-20">
-                  <p className="text-lg mb-2">👋 Start chatting with the bot!</p>
-                  <p className="text-sm">Try the quick commands below or type your own</p>
+                  <p className="text-lg mb-2">{t('start_chatting')}</p>
+                  <p className="text-sm">{t('try_commands')}</p>
                 </div>
               )}
               
@@ -404,7 +404,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
 
             {/* Quick Commands */}
             <div className="bg-white border-t border-gray-200 px-6 py-3">
-              <p className="text-sm text-gray-600 mb-2 font-semibold">Quick Commands:</p>
+              <p className="text-sm text-gray-600 mb-2 font-semibold">{t('quick_commands')}:</p>
               <div className="flex flex-wrap gap-2 mb-3">
                 {quickCommands.map((cmd, idx) => (
                   <button
@@ -426,7 +426,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Type a message..."
+                placeholder={t('type_message')}
                 className="flex-1 px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
               />
               <button
@@ -465,7 +465,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
 
         {/* API Pricing Plans */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-8">B2B API Pricing</h3>
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-8">{t('api_pricing')}</h3>
           <div className="grid md:grid-cols-3 gap-8">
             {apiPlans.map((plan) => (
               <div 
@@ -505,7 +505,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    {selectedPlan === plan.id ? 'Selected ✓' : 'Select Plan'}
+                    {selectedPlan === plan.id ? `${t('selected')} ✓` : t('select_plan')}
                   </button>
                 </div>
               </div>
@@ -515,10 +515,10 @@ _Need human help? Call 1800-XXX-XXXX_`;
 
         {/* Revenue Projections */}
         <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Projected Revenue (Year 1)</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('revenue_projections')}</h3>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-semibold text-gray-700 mb-4">Conservative Estimate</h4>
+              <h4 className="font-semibold text-gray-700 mb-4">{t('conservative')}</h4>
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
                   <span className="text-gray-700">WhatsApp Bot (1,000 users)</span>
@@ -533,14 +533,14 @@ _Need human help? Call 1800-XXX-XXXX_`;
                   <span className="font-bold text-gray-900">₹15L/year</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-green-50 rounded border-2 border-green-500">
-                  <span className="font-bold text-gray-900">Total Revenue</span>
+                  <span className="font-bold text-gray-900">{t('total_revenue')}</span>
                   <span className="font-bold text-2xl text-green-600">₹56.9L</span>
                 </div>
               </div>
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-700 mb-4">Optimistic Estimate</h4>
+              <h4 className="font-semibold text-gray-700 mb-4">{t('optimistic')}</h4>
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
                   <span className="text-gray-700">WhatsApp Bot (10,000 users)</span>
@@ -555,7 +555,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
                   <span className="font-bold text-gray-900">₹1.5Cr/year</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-blue-50 rounded border-2 border-blue-500">
-                  <span className="font-bold text-gray-900">Total Revenue</span>
+                  <span className="font-bold text-gray-900">{t('total_revenue')}</span>
                   <span className="font-bold text-2xl text-blue-600">₹3.89Cr</span>
                 </div>
               </div>

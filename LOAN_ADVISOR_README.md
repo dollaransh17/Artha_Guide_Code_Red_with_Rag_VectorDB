@@ -162,6 +162,10 @@ Compare loan offers from 5+ lenders in real-time.
 | PaySense | ₹2L | 16% | 24 hours |
 | KreditBee | ₹1L | 18% | 30 min |
 
+“For gig workers, this is life-changing —
+they used to go lender to lender blindly.
+Now they get instant transparency and safer borrowing decisions, all on one screen.”
+
 ---
 
 ### 5️⃣ **Business Model & WhatsApp Bot** 📈

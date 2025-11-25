@@ -169,7 +169,8 @@ Now they get instant transparency and safer borrowing decisions, all on one scre
 ---
 
 ### 5️⃣ **Business Model & WhatsApp Bot** 📈
-Explore ArthaGuide's revenue model and try the WhatsApp bot demo.
+“ArthaGuide has six revenue streams— "-------"
+But our biggest growth driver is right here — the WhatsApp Bot Demo.”
 
 **Features:**
 - ✅ **6 Revenue Streams**:

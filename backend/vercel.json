@@ -11,14 +11,5 @@
       "src": "/(.*)",
       "dest": "vercel_app.py"
     }
-  ],
-  "env": {
-    "MONGODB_URL": "@mongodb_url",
-    "DATABASE_NAME": "@database_name",
-    "SECRET_KEY": "@secret_key",
-    "ALGORITHM": "@algorithm",
-    "ACCESS_TOKEN_EXPIRE_MINUTES": "@access_token_expire_minutes",
-    "OPENAI_API_KEY": "@openai_api_key",
-    "CORS_ORIGINS": "@cors_origins"
-  }
+  ]
 }

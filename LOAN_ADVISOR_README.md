@@ -4,6 +4,18 @@
 
 **ArthaGuide** is a comprehensive financial platform designed specifically for India's gig workers. It provides SMS-powered transaction tracking, multilingual AI loan advisory, micro-loan marketplace, and business intelligence - all in English, Hindi (हिंदी), and Kannada (ಕನ್ನಡ).
 
+“Imagine earning ₹500 from an Uber ride at 2 PM, spending ₹200 on lunch at 3 PM… but having no idea whether you can pay rent next week.
+This is the reality for 77 million gig workers in India.”
+
+
+🟥 2. Problem Statement (What to Say)
+
+“India’s gig economy is booming — Swiggy riders, Ola drivers, freelancers — but they face 3 major challenges:
+Irregular Income — No fixed salary, unpredictable cash flow
+Language Barriers — Financial advice is mostly in English
+Loan Rejection — Banks don’t understand gig worker income patterns
+As a result, 68% take high-interest informal loans, trapping them in debt.”
+
 ### 🎯 Target Users:
 - Uber/Ola drivers
 - Swiggy/Zomato delivery partners

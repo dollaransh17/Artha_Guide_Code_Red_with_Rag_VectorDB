@@ -86,6 +86,10 @@ Rs 1,200 credited as Salary on 20-11-2025
 ### 3️⃣ **Multilingual Loan Advisor** 🤖
 AI-powered chatbot providing instant financial advice in 3 languages.
 
+"Now let me show you the feature that truly sets ArthaGuide apart —
+our Multilingual AI Loan Advisor.
+This is the heart of our innovation and the biggest need of gig workers today."
+
 **Features:**
 - ✅ **WhatsApp-style chat interface** with gradient header
 - ✅ **4 Quick Question buttons** in each language:

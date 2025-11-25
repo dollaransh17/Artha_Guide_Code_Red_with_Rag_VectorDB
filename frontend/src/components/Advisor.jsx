@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://backend-qlw90d2b8-dollaransh17s-projects.vercel.app';
+const API_URL = 'https://backend-p00m9plyd-dollaransh17s-projects.vercel.app';
 
 export default function Advisor() {
   const { t, i18n } = useTranslation();

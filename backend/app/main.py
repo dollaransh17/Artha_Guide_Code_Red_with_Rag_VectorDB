@@ -8,10 +8,10 @@ load_dotenv()
 app = FastAPI(title="ArthaGuide API", version="1.0.0")
 
 # CORS
-origins = os.getenv("CORS_ORIGINS", "*").split(",")
+origins = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for now
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,6 +25,9 @@ def read_root():
 def health_check():
     return {"status": "healthy"}
 
-# Import and include routers
-from app.api import advisor
-app.include_router(advisor.router, prefix="/api/advisor", tags=["advisor"])
+# Import routers (will be added)
+# from app.api import auth, sms, analytics, advisor
+# app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+# app.include_router(sms.router, prefix="/api/sms", tags=["sms"])
+# app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
+# app.include_router(advisor.router, prefix="/api/advisor", tags=["advisor"])

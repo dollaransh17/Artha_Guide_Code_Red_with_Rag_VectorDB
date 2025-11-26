@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
@@ -9,6 +9,15 @@ export default function Advisor() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [financialData, setFinancialData] = useState(null);
+
+  // Load financial data from localStorage
+  useEffect(() => {
+    const data = localStorage.getItem('arthaguide_financial_data');
+    if (data) {
+      setFinancialData(JSON.parse(data));
+    }
+  }, []);
 
   // Quick suggestion buttons
   const quickQuestions = {
@@ -47,21 +56,28 @@ export default function Advisor() {
       // Detect language from user input
       const hasHindi = /[\u0900-\u097F]/.test(currentInput) || 
                       currentInput.toLowerCase().includes('mujhe') || 
-                      currentInput.toLowerCase().includes('chahiye') || 
-                      currentInput.toLowerCase().includes('kaise') || 
-                      currentInput.toLowerCase().includes('kya') || 
-                      currentInput.toLowerCase().includes('mera');
+                      currentInput.toLowerCase().includes('chahiye');
       const hasKannada = /[\u0C80-\u0CFF]/.test(currentInput) || 
                         currentInput.toLowerCase().includes('nanu') || 
-                        currentInput.toLowerCase().includes('beku') || 
-                        currentInput.toLowerCase().includes('hege');
+                        currentInput.toLowerCase().includes('beku');
       
-      // Determine response language: user input language > selected UI language
       const responseLang = hasHindi ? 'hi' : hasKannada ? 'kn' : i18n.language;
+      
+      // Add financial context to the message if available
+      let contextualMessage = currentInput;
+      if (financialData) {
+        contextualMessage = `User's Financial Profile:
+- Monthly Income: ₹${financialData.monthlyIncome.toLocaleString()}
+- Monthly Expenses: ₹${financialData.monthlyExpenses.toLocaleString()}
+- Monthly Savings: ₹${financialData.monthlySavings.toLocaleString()}
+- Health Score: ${financialData.healthScore.toFixed(0)}/100
+
+User Query: ${currentInput}`;
+      }
       
       // Call backend API
       const response = await axios.post(`${API_URL}/api/advisor/chat`, {
-        message: currentInput,
+        message: contextualMessage,
         language: responseLang
       });
       
@@ -77,7 +93,6 @@ export default function Advisor() {
     } catch (error) {
       console.error('Error calling AI advisor:', error);
       
-      // Fallback to basic response if API fails
       const fallbackResponses = {
         en: "💬 I'm having trouble connecting right now. Please try again in a moment!",
         hi: "💬 मुझे अभी कनेक्ट करने में परेशानी हो रही है। कृपया एक क्षण में पुनः प्रयास करें!",

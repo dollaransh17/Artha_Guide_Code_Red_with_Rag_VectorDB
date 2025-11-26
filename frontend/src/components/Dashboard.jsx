@@ -83,6 +83,16 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    // Save financial summary to localStorage for AI advisor
+    localStorage.setItem('arthaguide_financial_data', JSON.stringify({
+      monthlyIncome: summary.income,
+      monthlyExpenses: summary.expenses,
+      monthlySavings: summary.balance,
+      categories: summary.categories,
+      healthScore: healthScore,
+      lastUpdated: new Date().toISOString()
+    }));
+
     // Destroy existing charts
     if (spendingChartInstance.current) {
       spendingChartInstance.current.destroy();

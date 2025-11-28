@@ -6,15 +6,28 @@ Chart.register(...registerables);
 
 export default function Dashboard() {
   const { t } = useTranslation();
-  const [transactions, setTransactions] = useState([
-    { amount: 45000, type: 'credit', merchant: 'Salary', category: 'Income', date: '2025-11-01' },
-    { amount: 8500, type: 'debit', merchant: 'Swiggy', category: 'Food', date: '2025-11-03' },
-    { amount: 3200, type: 'debit', merchant: 'Uber', category: 'Travel', date: '2025-11-05' },
-    { amount: 5000, type: 'debit', merchant: 'Electricity', category: 'Bills', date: '2025-11-07' },
-    { amount: 2800, type: 'debit', merchant: 'Flipkart', category: 'Shopping', date: '2025-11-10' },
-    { amount: 1500, type: 'debit', merchant: 'Cafe', category: 'Food', date: '2025-11-12' },
-    { amount: 4200, type: 'debit', merchant: 'Metro', category: 'Travel', date: '2025-11-15' }
-  ]);
+  
+  // Load transactions from localStorage or use defaults
+  const [transactions, setTransactions] = useState(() => {
+    const saved = localStorage.getItem('arthaguide_transactions');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return [
+      { amount: 45000, type: 'credit', merchant: 'Salary', category: 'Income', date: '2025-11-01' },
+      { amount: 8500, type: 'debit', merchant: 'Swiggy', category: 'Food', date: '2025-11-03' },
+      { amount: 3200, type: 'debit', merchant: 'Uber', category: 'Travel', date: '2025-11-05' },
+      { amount: 5000, type: 'debit', merchant: 'Electricity', category: 'Bills', date: '2025-11-07' },
+      { amount: 2800, type: 'debit', merchant: 'Flipkart', category: 'Shopping', date: '2025-11-10' },
+      { amount: 1500, type: 'debit', merchant: 'Cafe', category: 'Food', date: '2025-11-12' },
+      { amount: 4200, type: 'debit', merchant: 'Metro', category: 'Travel', date: '2025-11-15' }
+    ];
+  });
+  
+  // Save to localStorage whenever transactions change
+  useEffect(() => {
+    localStorage.setItem('arthaguide_transactions', JSON.stringify(transactions));
+  }, [transactions]);
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [newTransaction, setNewTransaction] = useState({
@@ -83,16 +96,6 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    // Save financial summary to localStorage for AI advisor
-    localStorage.setItem('arthaguide_financial_data', JSON.stringify({
-      monthlyIncome: summary.income,
-      monthlyExpenses: summary.expenses,
-      monthlySavings: summary.balance,
-      categories: summary.categories,
-      healthScore: healthScore,
-      lastUpdated: new Date().toISOString()
-    }));
-
     // Destroy existing charts
     if (spendingChartInstance.current) {
       spendingChartInstance.current.destroy();
@@ -193,7 +196,7 @@ export default function Dashboard() {
                 <div className="text-7xl font-bold mb-2">{healthScore.toFixed(0)}</div>
                 <div className="flex items-center space-x-2">
                   <span className="text-lg opacity-90">{t('out_of')}</span>
-                  {healthScore >= 70 && <span className="text-2xl">🔥</span>}
+                  {healthScore >= 70 && <span className="text-2xl">✅</span>}
                   {healthScore >= 50 && healthScore < 70 && <span className="text-2xl">👍</span>}
                   {healthScore < 50 && <span className="text-2xl">⚠️</span>}
                 </div>
@@ -294,7 +297,7 @@ export default function Dashboard() {
                     {tx.category === 'Income' && '💰'}
                     {tx.category === 'Food' && '🍔'}
                     {tx.category === 'Travel' && '🚗'}
-                    {tx.category === 'Bills' && '💡'}
+                    {tx.category === 'Bills' && '📍'}
                     {tx.category === 'Shopping' && '🛒'}
                     {tx.category === 'Transport' && '⛽'}
                     {tx.category === 'Entertainment' && '🎬'}
@@ -407,7 +410,7 @@ export default function Dashboard() {
                         <option value="Travel">🚗 Travel</option>
                         <option value="Transport">⛽ Transport</option>
                         <option value="Shopping">🛒 Shopping</option>
-                        <option value="Bills">💡 Bills</option>
+                        <option value="Bills">📍 Bills</option>
                         <option value="Entertainment">🎬 Entertainment</option>
                         <option value="Healthcare">🏥 Healthcare</option>
                         <option value="Others">💳 Others</option>

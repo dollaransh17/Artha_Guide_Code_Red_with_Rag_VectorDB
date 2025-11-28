@@ -25,9 +25,6 @@ def read_root():
 def health_check():
     return {"status": "healthy"}
 
-# Import routers (will be added)
-# from app.api import auth, sms, analytics, advisor
-# app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-# app.include_router(sms.router, prefix="/api/sms", tags=["sms"])
-# app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
-# app.include_router(advisor.router, prefix="/api/advisor", tags=["advisor"])
+# Import routers
+from app.api import rag_advisor
+app.include_router(rag_advisor.router, prefix="/api", tags=["rag-advisor"])

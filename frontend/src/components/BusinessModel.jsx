@@ -68,7 +68,7 @@ export default function BusinessModel() {
 
   const revenueStreams = [
     {
-      icon: '🤖',
+      icon: '💬',
       titleKey: 'whatsapp_bot_api',
       revenueKey: 'whatsapp_bot_price',
       descKey: 'whatsapp_bot_desc',
@@ -165,7 +165,7 @@ export default function BusinessModel() {
       response: '✅ ₹500 expense added to Food category'
     },
     {
-      command: '💡 Smart Insights',
+      command: '📍 Smart Insights',
       example: 'Send "Insights"',
       response: '⚠️ Food spending up 15%. Tip: Cook at home 2x/week to save ₹2k'
     },
@@ -203,7 +203,7 @@ export default function BusinessModel() {
 ✅ Balance: ₹13,000
 📈 Income: ₹45,000
 📉 Expenses: ₹32,000
-⭐ Health Score: 72/100
+📈 Health Score: 72/100
 
 _Last updated: Just now_`;
       } else if (lowerMsg.match(/\d+.*food|swiggy|zomato/)) {
@@ -217,10 +217,10 @@ _Last updated: Just now_`;
 📊 Total Food spending this month: ₹${parseInt(amount) + 8500}
 ⚠️ You've spent 23% more on food than last month`;
       } else if (lowerMsg.includes('insight') || lowerMsg.includes('tip')) {
-        botResponse = `💡 *Your Smart Insights*
+        botResponse = `📍 *Your Smart Insights*
 
 1️⃣ Food spending is up 15% (₹2,000 extra)
-   💡 Tip: Cook at home 2x/week to save
+   📍 Tip: Cook at home 2x/week to save
 
 2️⃣ You're on track to save ₹13k this month! 🎉
 
@@ -235,7 +235,7 @@ _Want detailed report? Reply "Report"_`;
 
 ✅ You're eligible for ₹${parseInt(amount).toLocaleString()}!
 
-🏆 *Best Offers:*
+✓ *Best Offers:*
 
 1. MoneyTap
    • Rate: 13% APR
@@ -264,11 +264,11 @@ _Reply "APPLY" to proceed_`;
    • Others: ₹6,800 (21%)
 
 ✅ Savings: ₹13,000 (29%)
-⭐ Health Score: 72/100
+📈 Health Score: 72/100
 
 _Doing great! Keep it up! 🎉_`;
       } else if (lowerMsg.includes('help')) {
-        botResponse = `🤖 *ArthaGuide Bot Commands*
+        botResponse = `💬 *ArthaGuide Bot Commands*
 
 • *Balance* - Check your balance
 • *[Amount] [Category] [Merchant]* - Add expense
@@ -358,7 +358,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
           <div className="bg-white rounded-2xl overflow-hidden shadow-2xl mb-6">
             {/* WhatsApp Header */}
             <div className="bg-green-600 text-white px-6 py-4 flex items-center space-x-4">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl">🤖</div>
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl">💬</div>
               <div>
                 <h4 className="font-bold text-lg">ArthaGuide Bot</h4>
                 <p className="text-sm opacity-90">Online • Typically replies instantly</p>
@@ -457,7 +457,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
           
           <div className="mt-6 bg-white/10 rounded-lg p-4">
             <p className="text-sm">
-              <strong>🚀 Monetization:</strong> ₹99/user/month subscription OR ₹2/conversation for B2B API access. 
+              <strong>📱 Monetization:</strong> ₹99/user/month subscription OR ₹2/conversation for B2B API access. 
               Partner with Uber, Swiggy, Zomato to offer as employee benefit.
             </p>
           </div>
@@ -567,7 +567,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
         <div className="mt-12 grid md:grid-cols-3 gap-6">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-blue-500 p-6 rounded-lg">
             <h4 className="font-bold text-gray-900 mb-3 flex items-center">
-              <span className="text-2xl mr-2">🎯</span>
+              <span className="text-2xl mr-2">📌</span>
               Network Effect
             </h4>
             <p className="text-gray-700 text-sm">
@@ -587,7 +587,7 @@ _Need human help? Call 1800-XXX-XXXX_`;
           
           <div className="bg-gradient-to-br from-purple-50 to-purple-100 border-l-4 border-purple-500 p-6 rounded-lg">
             <h4 className="font-bold text-gray-900 mb-3 flex items-center">
-              <span className="text-2xl mr-2">🚀</span>
+              <span className="text-2xl mr-2">📱</span>
               Scalability
             </h4>
             <p className="text-gray-700 text-sm">

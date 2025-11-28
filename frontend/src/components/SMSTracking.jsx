@@ -77,7 +77,7 @@ Rs 5000 credited as refund from Flipkart on 2025-11-22`;
 
         {/* How it Works */}
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 mb-8 text-white shadow-2xl">
-          <h3 className="text-2xl font-bold mb-6">🚀 {t('how_it_works')}</h3>
+          <h3 className="text-2xl font-bold mb-6">📋 {t('how_it_works')}</h3>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white/10 backdrop-blur rounded-xl p-6">
               <div className="text-4xl mb-4">📩</div>
@@ -85,7 +85,7 @@ Rs 5000 credited as refund from Flipkart on 2025-11-22`;
               <p className="text-sm opacity-90">{t('paste_sms_desc')}</p>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-6">
-              <div className="text-4xl mb-4">🤖</div>
+              <div className="text-4xl mb-4">💬</div>
               <h4 className="font-bold text-lg mb-2">2. {t('auto_parse')}</h4>
               <p className="text-sm opacity-90">{t('auto_parse_desc')}</p>
             </div>
@@ -158,7 +158,7 @@ Rs 5000 credited as refund from Flipkart on 2025-11-22`;
                           {tx.category === 'Travel' && '🚗'}
                           {tx.category === 'Transport' && '⛽'}
                           {tx.category === 'Shopping' && '🛒'}
-                          {tx.category === 'Bills' && '💡'}
+                          {tx.category === 'Bills' && '📋'}
                           {tx.category === 'Entertainment' && '🎬'}
                           {tx.category === 'Healthcare' && '🏥'}
                           {tx.category === 'Others' && '💳'}
@@ -218,7 +218,7 @@ Rs 5000 credited as refund from Flipkart on 2025-11-22`;
               { emoji: '🚗', name: 'Travel', keywords: 'Uber, Ola, Metro' },
               { emoji: '⛽', name: 'Transport', keywords: 'Fuel, Petrol' },
               { emoji: '🛒', name: 'Shopping', keywords: 'Amazon, Flipkart' },
-              { emoji: '💡', name: 'Bills', keywords: 'Electricity, Mobile' },
+              { emoji: '📋', name: 'Bills', keywords: 'Electricity, Mobile' },
               { emoji: '🎬', name: 'Entertainment', keywords: 'Netflix, Movie' },
               { emoji: '🏥', name: 'Healthcare', keywords: 'Hospital, Medicine' }
             ].map((cat, idx) => (

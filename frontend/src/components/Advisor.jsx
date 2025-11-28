@@ -1,47 +1,55 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-
-const API_URL = 'https://backend-p00m9plyd-dollaransh17s-projects.vercel.app';
 
 export default function Advisor() {
   const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [financialData, setFinancialData] = useState(null);
-
-  // Load financial data from localStorage
-  useEffect(() => {
-    const data = localStorage.getItem('arthaguide_financial_data');
-    if (data) {
-      setFinancialData(JSON.parse(data));
-    }
-  }, []);
 
   // Quick suggestion buttons
   const quickQuestions = {
     en: [
       { text: "Am I eligible for a loan?", emoji: "💳" },
       { text: "How much can I borrow?", emoji: "💰" },
-      { text: "Best loan for gig workers?", emoji: "🎯" },
-      { text: "How to improve credit score?", emoji: "⭐" }
+      { text: "Best loan for gig workers?", emoji: "📝" },
+      { text: "How to improve credit score?", emoji: "📈" }
     ],
     hi: [
       { text: "क्या मैं ऋण के लिए पात्र हूं?", emoji: "💳" },
       { text: "मैं कितना उधार ले सकता हूं?", emoji: "💰" },
-      { text: "गिग वर्कर्स के लिए सबसे अच्छा ऋण?", emoji: "🎯" },
-      { text: "क्रेडिट स्कोर कैसे सुधारें?", emoji: "⭐" }
+      { text: "गिग वर्कर्स के लिए सबसे अच्छा ऋण?", emoji: "📝" },
+      { text: "क्रेडिट स्कोर कैसे सुधारें?", emoji: "📈" }
     ],
     kn: [
       { text: "ನಾನು ಸಾಲಕ್ಕೆ ಅರ್ಹನೇ?", emoji: "💳" },
       { text: "ನಾನು ಎಷ್ಟು ಸಾಲ ಪಡೆಯಬಹುದು?", emoji: "💰" },
-      { text: "ಗಿಗ್ ವರ್ಕರ್‌ಗಳಿಗೆ ಉತ್ತಮ ಸಾಲ?", emoji: "🎯" },
-      { text: "ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಸುಧಾರಿಸುವುದು ಹೇಗೆ?", emoji: "⭐" }
+      { text: "ಗಿಗ್ ವರ್ಕರ್‌ಗಳಿಗೆ ಉತ್ತಮ ಸಾಲ?", emoji: "📝" },
+      { text: "ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಸುಧಾರಿಸುವುದು ಹೇಗೆ?", emoji: "📈" }
     ]
   };
 
   const currentQuestions = quickQuestions[i18n.language] || quickQuestions.en;
+
+  // Load user's actual financial data from localStorage
+  const getUserFinancialData = () => {
+    const savedTransactions = localStorage.getItem('arthaguide_transactions');
+    if (savedTransactions) {
+      const transactions = JSON.parse(savedTransactions);
+      let income = 0, expenses = 0;
+      transactions.forEach(tx => {
+        if (tx.type === 'credit') income += tx.amount;
+        else if (tx.type === 'debit') expenses += tx.amount;
+      });
+      return { 
+        monthlyIncome: income, 
+        monthlyExpenses: expenses, 
+        monthlySavings: income - expenses,
+        healthScore: Math.min(100, Math.floor((income - expenses) / income * 100))
+      };
+    }
+    return { monthlyIncome: 45000, monthlyExpenses: 32000, monthlySavings: 13000, healthScore: 72 };
+  };
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -53,57 +61,41 @@ export default function Advisor() {
     setIsTyping(true);
     
     try {
-      // Detect language from user input
-      const hasHindi = /[\u0900-\u097F]/.test(currentInput) || 
-                      currentInput.toLowerCase().includes('mujhe') || 
-                      currentInput.toLowerCase().includes('chahiye');
-      const hasKannada = /[\u0C80-\u0CFF]/.test(currentInput) || 
-                        currentInput.toLowerCase().includes('nanu') || 
-                        currentInput.toLowerCase().includes('beku');
-      
-      const responseLang = hasHindi ? 'hi' : hasKannada ? 'kn' : i18n.language;
-      
-      // Add financial context to the message if available
-      let contextualMessage = currentInput;
-      if (financialData) {
-        contextualMessage = `User's Financial Profile:
-- Monthly Income: ₹${financialData.monthlyIncome.toLocaleString()}
-- Monthly Expenses: ₹${financialData.monthlyExpenses.toLocaleString()}
-- Monthly Savings: ₹${financialData.monthlySavings.toLocaleString()}
-- Health Score: ${financialData.healthScore.toFixed(0)}/100
-
-User Query: ${currentInput}`;
-      }
-      
-      // Call backend API
-      const response = await axios.post(`${API_URL}/api/advisor/chat`, {
-        message: contextualMessage,
-        language: responseLang
+      // Call RAG backend API
+      const userProfile = getUserFinancialData();
+      const response = await fetch('http://localhost:8000/api/rag-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: currentInput,
+          language: i18n.language,
+          user_profile: userProfile
+        })
       });
       
-      const botResponse = response.data.response;
+      const data = await response.json();
+      const botResponse = data.response;
       
       setMessages(prev => [...prev, { 
         role: 'bot', 
         text: botResponse, 
-        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) 
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        sources: data.sources // Store sources for citation
       }]);
-      setIsTyping(false);
-      
     } catch (error) {
-      console.error('Error calling AI advisor:', error);
-      
-      const fallbackResponses = {
-        en: "💬 I'm having trouble connecting right now. Please try again in a moment!",
-        hi: "💬 मुझे अभी कनेक्ट करने में परेशानी हो रही है। कृपया एक क्षण में पुनः प्रयास करें!",
-        kn: "💬 ನನಗೆ ಈಗ ಸಂಪರ್ಕಿಸಲು ಸಮಸ್ಯೆ ಇದೆ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!"
-      };
-      
+      console.error('RAG API Error:', error);
+      // Fallback response
+      const fallbackMsg = i18n.language === 'en' 
+        ? "💬 I'm having trouble connecting to my knowledge base. Please make sure the backend is running!"
+        : i18n.language === 'hi'
+        ? "💬 मुझे अपने ज्ञान आधार से कनेक्ट करने में समस्या हो रही है। कृपया सुनिश्चित करें कि बैकएंड चल रहा है!"
+        : "💬 ನನ್ನ ಜ್ಞಾನ ನೆಲೆಗೆ ಸಂಪರ್ಕಿಸಲು ನನಗೆ ತೊಂದರೆಯಾಗುತ್ತಿದೆ. ದಯವಿಟ್ಟು ಬ್ಯಾಕೆಂಡ್ ಚಾಲನೆಯಲ್ಲಿದೆಯೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ!";
       setMessages(prev => [...prev, { 
         role: 'bot', 
-        text: fallbackResponses[i18n.language] || fallbackResponses.en,
+        text: fallbackMsg, 
         time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) 
       }]);
+    } finally {
       setIsTyping(false);
     }
   };
@@ -122,7 +114,7 @@ User Query: ${currentInput}`;
       
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">🤖 Multilingual Loan Advisor</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">💬 Multilingual Loan Advisor</h2>
           <p className="text-xl text-gray-600">AI-powered financial advice in your language</p>
         </div>
         
@@ -130,7 +122,7 @@ User Query: ${currentInput}`;
           {/* Chat Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl">🤖</div>
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl">💬</div>
               <div>
                 <h3 className="font-bold text-lg">ArthaGuide AI Advisor</h3>
                 <div className="flex items-center space-x-2 text-sm opacity-90">
@@ -139,11 +131,24 @@ User Query: ${currentInput}`;
                 </div>
               </div>
             </div>
-            <div className="text-3xl">🌐</div>
+            <div className="text-3xl">📱</div>
           </div>
 
           {/* Chat Messages */}
-          <div className="h-96 overflow-y-auto p-6 bg-gradient-to-b from-gray-50 to-white">
+          <div className="h-96 overflow-y-auto p-6 relative">
+            {/* Background image */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: 'url(/hero-finance.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'local',
+                opacity: 0.6,
+                filter: 'saturate(1.4) brightness(0.95)'
+              }}
+            />
+            <div className="relative z-10">
             {messages.length === 0 && (
               <div className="text-center mt-16">
                 <div className="text-6xl mb-4">💬</div>
@@ -185,6 +190,7 @@ User Query: ${currentInput}`;
                 </div>
               </div>
             )}
+            </div>
           </div>
 
           {/* Input Area */}
@@ -212,7 +218,7 @@ User Query: ${currentInput}`;
         {/* Info Cards */}
         <div className="grid md:grid-cols-3 gap-6 mt-8">
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
-            <div className="text-3xl mb-3">🌐</div>
+            <div className="text-3xl mb-3">📱</div>
             <h4 className="font-bold text-lg mb-2">
               {i18n.language === 'en' ? '3 Languages' : i18n.language === 'hi' ? '3 भाषाएँ' : '3 ಭಾಷೆಗಳು'}
             </h4>
@@ -221,7 +227,7 @@ User Query: ${currentInput}`;
             </p>
           </div>
           <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
-            <div className="text-3xl mb-3">⚡</div>
+            <div className="text-3xl mb-3">⏱️</div>
             <h4 className="font-bold text-lg mb-2">
               {i18n.language === 'en' ? 'Instant Advice' : i18n.language === 'hi' ? 'तुरंत सलाह' : 'ತತ್ಕಾಲ ಸಲಹೆ'}
             </h4>

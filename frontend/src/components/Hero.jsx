@@ -34,19 +34,6 @@ export default function Hero({ setCurrentView }) {
             </button>
           </div>
         </div>
-        <div className="flex justify-center mt-12 scale-in">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-3xl blur-3xl opacity-20 morphing-blob"></div>
-            <img 
-              src="https://cdn.dribbble.com/users/1787323/screenshots/14288816/media/4c0b4f1d09c7983e6b8e3e8e3e6f2d8f.png" 
-              alt="Financial Robot Illustration" 
-              className="relative w-full max-w-2xl float-animation rounded-3xl shadow-2xl"
-              onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/800x600/f3f4f6/4b5563?text=ArthaGuide';
-              }}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

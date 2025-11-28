@@ -26,5 +26,6 @@ def health_check():
     return {"status": "healthy"}
 
 # Import routers
-from app.api import rag_advisor
+from app.api import rag_advisor, intent_router
 app.include_router(rag_advisor.router, prefix="/api", tags=["rag-advisor"])
+app.include_router(intent_router.router, prefix="/api", tags=["intent-router"])

@@ -43,4 +43,12 @@ export const advisorService = {
   chat: (message, language) => api.post('/api/advisor/chat', { message, language }),
 };
 
+export const intentService = {
+  classify: (query, language, currentRoute = null) => 
+    api.post('/api/intent/classify', { query, language, current_route: currentRoute }),
+  getHelp: (query, currentRoute, language = 'en') => 
+    api.post('/api/intent/help', { query, current_route: currentRoute, language }),
+  getFeatures: () => api.get('/api/intent/features'),
+};
+
 export default api;

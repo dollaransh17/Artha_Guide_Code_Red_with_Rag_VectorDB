@@ -1,7 +1,8 @@
-# Environment variables
+# Environment variables (IMPORTANT - NEVER COMMIT!)
 .env
-.env.local
-.env.*.local
+backend/.env
+frontend/.env
+*.env
 
 # Python
 __pycache__/
@@ -9,33 +10,61 @@ __pycache__/
 *$py.class
 *.so
 .Python
-venv/
 env/
+venv/
+.venv/
 ENV/
-.venv
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Node
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-dist/
-build/
+.pnpm-debug.log*
+frontend/node_modules/
+frontend/dist/
+frontend/build/
 
-# IDE
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 .DS_Store
 
 # Logs
 *.log
+logs/
 
 # Database
-*.sqlite
 *.db
+*.sqlite
+*.sqlite3
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Deployment
+.vercel

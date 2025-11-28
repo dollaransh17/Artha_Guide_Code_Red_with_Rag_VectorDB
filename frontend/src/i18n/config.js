@@ -33,6 +33,7 @@ const resources = {
       nav_loans: "Loans",
       nav_business: "Business",
       nav_sms: "SMS Tracking",
+      nav_smart: "Smart Nav",
       dashboard_title: "Financial Dashboard",
       last_transactions: "Recent Transactions",
       add_transaction: "Add Transaction",
@@ -137,7 +138,19 @@ const resources = {
       key_features: "Key Features",
       market: "Market",
       selected: "Selected",
-      select_plan: "Select Plan"
+      select_plan: "Select Plan",
+      
+      // Agentic Navigator
+      "agenticNav.title": "Smart Navigation",
+      "agenticNav.subtitle": "Tell me what you need, I'll take you there",
+      "agenticNav.placeholder": "What would you like to do? e.g., \"I need financial advice\"",
+      "agenticNav.go": "Go",
+      "agenticNav.suggestion": "Routing Suggestion",
+      "agenticNav.confident": "confident",
+      "agenticNav.takeMe": "Take me there",
+      "agenticNav.tryThese": "Try these examples:",
+      "agenticNav.howItWorks": "How it works:",
+      "agenticNav.description": "Our AI analyzes your request and intelligently routes you to the most relevant feature. No need to remember where everything is - just tell us what you need!"
     }
   },
   hi: {
@@ -171,6 +184,7 @@ const resources = {
       nav_loans: "ऋण",
       nav_business: "व्यवसाय",
       nav_sms: "SMS ट्रैकिंग",
+      nav_smart: "स्मार्ट नेव",
       dashboard_title: "वित्तीय डैशबोर्ड",
       last_transactions: "हाल के लेनदेन",
       add_transaction: "लेनदेन जोड़ें",
@@ -275,7 +289,19 @@ const resources = {
       key_features: "मुख्य विशेषताएं",
       market: "बाज़ार",
       selected: "चयनित",
-      select_plan: "योजना चुनें"
+      select_plan: "योजना चुनें",
+      
+      // Agentic Navigator
+      "agenticNav.title": "स्मार्ट नेविगेशन",
+      "agenticNav.subtitle": "मुझे बताएं कि आपको क्या चाहिए, मैं आपको वहां ले जाऊंगा",
+      "agenticNav.placeholder": "आप क्या करना चाहेंगे? उदा., \"मुझे वित्तीय सलाह चाहिए\"",
+      "agenticNav.go": "जाएं",
+      "agenticNav.suggestion": "रूटिंग सुझाव",
+      "agenticNav.confident": "विश्वस्त",
+      "agenticNav.takeMe": "मुझे वहां ले जाएं",
+      "agenticNav.tryThese": "ये उदाहरण आज़माएं:",
+      "agenticNav.howItWorks": "यह कैसे काम करता है:",
+      "agenticNav.description": "हमारा AI आपके अनुरोध का विश्लेषण करता है और आपको सबसे प्रासंगिक फीचर पर ले जाता है। सब कुछ याद रखने की जरूरत नहीं - बस हमें बताएं कि आपको क्या चाहिए!"
     }
   },
   kn: {
@@ -309,6 +335,7 @@ const resources = {
       nav_loans: "ಸಾಲಗಳು",
       nav_business: "ವ್ಯಾಪಾರ",
       nav_sms: "SMS ಟ್ರ್ಯಾಕಿಂಗ್",
+      nav_smart: "ಸ್ಮಾರ್ಟ್ ನ್ಯಾವ್",
       dashboard_title: "ಹಣಕಾಸು ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
       last_transactions: "ಇತ್ತೀಚಿನ ವಹಿವಾಟುಗಳು",
       add_transaction: "ವಹಿವಾಟು ಸೇರಿಸಿ",
@@ -412,7 +439,19 @@ const resources = {
       key_features: "ಮುಖ್ಯ ವೈಶಿಷ್ಟ್ಯಗಳು",
       market: "ಮಾರುಕಟ್ಟೆ",
       selected: "ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ",
-      select_plan: "ಯೋಜನೆ ಆಯ್ಕೆಮಾಡಿ"
+      select_plan: "ಯೋಜನೆ ಆಯ್ಕೆಮಾಡಿ",
+      
+      // Agentic Navigator
+      "agenticNav.title": "ಸ್ಮಾರ್ಟ್ ನ್ಯಾವಿಗೇಶನ್",
+      "agenticNav.subtitle": "ನಿಮಗೆ ಏನು ಬೇಕು ಹೇಳಿ, ನಾನು ನಿಮ್ಮನ್ನು ಅಲ್ಲಿಗೆ ಕರೆದೊಯ್ಯುತ್ತೇನೆ",
+      "agenticNav.placeholder": "ನೀವು ಏನು ಮಾಡಲು ಬಯಸುತ್ತೀರಿ? ಉದಾ., \"ನನಗೆ ಹಣಕಾಸು ಸಲಹೆ ಬೇಕು\"",
+      "agenticNav.go": "ಹೋಗಿ",
+      "agenticNav.suggestion": "ರೂಟಿಂಗ್ ಸಲಹೆ",
+      "agenticNav.confident": "ವಿಶ್ವಾಸ",
+      "agenticNav.takeMe": "ನನ್ನನ್ನು ಅಲ್ಲಿಗೆ ಕರೆದೊಯ್ಯಿ",
+      "agenticNav.tryThese": "ಈ ಉದಾಹರಣೆಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ:",
+      "agenticNav.howItWorks": "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ:",
+      "agenticNav.description": "ನಮ್ಮ AI ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ವಿಶ್ಲೇಷಿಸುತ್ತದೆ ಮತ್ತು ನಿಮ್ಮನ್ನು ಅತ್ಯಂತ ಸಂಬಂಧಿತ ವೈಶಿಷ್ಟ್ಯಕ್ಕೆ ಮಾರ್ಗದರ್ಶನ ಮಾಡುತ್ತದೆ. ಎಲ್ಲವನ್ನೂ ನೆನಪಿಟ್ಟುಕೊಳ್ಳುವ ಅಗತ್ಯವಿಲ್ಲ - ನಿಮಗೆ ಏನು ಬೇಕು ಎಂದು ಹೇಳಿ!"
     }
   }
 };

@@ -54,7 +54,13 @@ class IntentRouter:
     
     def __init__(self):
         """Initialize the intent router"""
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = None
+    
+    def _get_model(self):
+        """Lazy load Gemini model on first use"""
+        if self.model is None:
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        return self.model
     
     def _get_feature_descriptions(self) -> str:
         """Generate feature descriptions for the prompt"""
@@ -119,7 +125,8 @@ Respond in JSON format:
 Choose the most appropriate feature based on the user's intent. If uncertain, default to 'advisor' for questions or 'features' for general exploration."""
 
         try:
-            response = self.model.generate_content(prompt)
+            model = self._get_model()
+            response = model.generate_content(prompt)
             result = response.text.strip()
             
             # Extract JSON from response
@@ -179,7 +186,8 @@ They asked: "{query}"
 Provide a brief, helpful response (2-3 sentences) explaining what they can do on this page or guiding them to the right feature."""
 
         try:
-            response = self.model.generate_content(prompt)
+            model = self._get_model()
+            response = model.generate_content(prompt)
             return response.text.strip()
         except:
             return f"You're on the {current_route} page. {description}"

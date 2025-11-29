@@ -66,7 +66,10 @@ export default function Advisor() {
       const userProfile = getUserFinancialData();
       const response = await fetch(`${API_BASE_URL}/api/rag-chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
         body: JSON.stringify({
           message: currentInput,
           language: i18n.language,

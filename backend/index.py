@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from mangum import Mangum
 import os
 
 # Create FastAPI app directly
@@ -95,5 +96,5 @@ try:
 except Exception as e:
     print(f"RAG advisor not loaded: {e}")
 
-# Export for Vercel
-handler = app
+# Export for Vercel using Mangum
+handler = Mangum(app, lifespan="off")

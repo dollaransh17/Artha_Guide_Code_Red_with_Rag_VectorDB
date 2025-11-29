@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import os
 
 # Create FastAPI app directly
-app = FastAPI(title="ArthaGuide API", version="1.0.0")
+app = FastAPI(title="ArthaGuide API", version="1.0.0", root_path="")
 
 # CORS
 app.add_middleware(
@@ -22,6 +22,12 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.get("/debug")
+def debug_routes():
+    """Debug endpoint to see all registered routes"""
+    routes = [{"path": route.path, "name": route.name} for route in app.routes]
+    return {"routes": routes}
 
 # Intent Router endpoints
 class IntentQuery(BaseModel):

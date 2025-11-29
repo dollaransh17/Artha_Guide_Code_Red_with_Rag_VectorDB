@@ -7,11 +7,15 @@ load_dotenv()
 
 app = FastAPI(title="ArthaGuide API", version="1.0.0")
 
-# CORS
+# CORS - Allow all Vercel deployments
 origins = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
+# Add wildcard for Vercel preview deployments
+if any("vercel.app" in origin for origin in origins):
+    origins.append("https://*.vercel.app")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # Allow all origins for now
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

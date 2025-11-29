@@ -62,8 +62,9 @@ export default function Advisor() {
     
     try {
       // Call RAG backend API
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const userProfile = getUserFinancialData();
-      const response = await fetch('http://localhost:8000/api/rag-chat', {
+      const response = await fetch(`${API_BASE_URL}/api/rag-chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

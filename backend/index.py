@@ -88,3 +88,6 @@ try:
     app.include_router(rag_advisor.router, prefix="/api", tags=["rag-advisor"])
 except Exception as e:
     print(f"RAG advisor not loaded: {e}")
+
+# Export for Vercel
+handler = app

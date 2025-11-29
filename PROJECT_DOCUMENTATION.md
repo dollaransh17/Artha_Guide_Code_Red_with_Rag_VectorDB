@@ -279,23 +279,10 @@ npm run dev
 
 ---
 
-## 🎥 Demo Video
-
-**1-Minute Demo:** [Link to Loom/YouTube]
-
-**What the demo shows:**
-1. User adds ₹100,000 salary in Dashboard
-2. Goes to AI Advisor and asks "मुझे 30000 का loan chahiye" (Hindi)
-3. RAG system:
-   - Retrieves relevant loan products from Qdrant
-   - Filters by user's ₹100K income
-   - Responds in Hindi with personalized recommendations
-4. Shows source attribution (which vectors were retrieved)
-5. Displays recommended loan products
 
 ---
 
-## 🏅 Why This Deserves to Win
+
 
 ### 1. **True Memory-First Architecture**
 - Not a prompt wrapper — Qdrant is the *core* of the system
@@ -340,7 +327,7 @@ npm run dev
 ## 👥 Team
 
 - **Team Name:** Hackistanis
-- **Members:** [Your name]
+- 
 - **University:** Ramaiah Institute of Technology
 
 ---
@@ -358,31 +345,10 @@ npm run dev
 
 ## 🔗 Links
 
-- **GitHub Repo:** https://github.com/dollaransh17/Artha_Guide_Code_Red
-- **Live Demo:** [Deployment URL]
-- **Demo Video:** [YouTube/Loom]
+-
+- 
 - **Qdrant Cloud Dashboard:** [If using Qdrant Cloud]
 
----
-
-## 📜 License
-
-MIT License - Open Source
-
----
-
-## 🙏 Acknowledgments
-
-- **HiDevs** for organizing this hackathon
-- **Qdrant** for the amazing vector database
-- **OpenAI** for LLM APIs
-- **India's 77 million gig workers** who inspired this project
-
----
-
-## 📞 Contact
-
-**GitHub:** [@dollaransh17](https://github.com/dollaransh17)
 
 ---
 

@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
 
+# Import routers at the top
+from app.api import rag_advisor, intent_router
+
 load_dotenv()
 
 app = FastAPI(title="ArthaGuide API", version="1.0.0")
@@ -29,7 +32,6 @@ def read_root():
 def health_check():
     return {"status": "healthy"}
 
-# Import routers
-from app.api import rag_advisor, intent_router
+# Register routers
 app.include_router(rag_advisor.router, prefix="/api", tags=["rag-advisor"])
 app.include_router(intent_router.router, prefix="/api", tags=["intent-router"])

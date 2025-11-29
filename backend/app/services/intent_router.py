@@ -54,7 +54,7 @@ class IntentRouter:
     
     def __init__(self):
         """Initialize the intent router"""
-        self.model = genai.GenerativeModel('gemini-pro')
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
     
     def _get_feature_descriptions(self) -> str:
         """Generate feature descriptions for the prompt"""

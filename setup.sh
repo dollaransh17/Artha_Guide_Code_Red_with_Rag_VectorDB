@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ArthaGuide RAG System Setup Script
-# Memory Over Models Hackathon
+
 
 echo "🚀 Setting up ArthaGuide - Memory-First Financial AI"
 echo "=================================================="

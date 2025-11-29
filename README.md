@@ -1,1 +1,2 @@
 # Artha_Guide_Code_Red_with_Rag_VectorDB
+read PROJECT_DOCUMENTATION.md

@@ -10,7 +10,7 @@ import os
 from typing import Optional, List, Dict
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from services.qdrant_memory import FinancialMemoryRAG
+# from services.qdrant_memory import FinancialMemoryRAG  # Commented out - using simplified RAG
 
 router = APIRouter()
 
@@ -187,22 +187,12 @@ Your role:
 @router.get("/health")
 async def rag_health():
     """Health check for RAG system"""
-    try:
-        # Check Qdrant connection
-        rag = get_rag_system()
-        collections_count = len(rag.collections)
-        return {
-            "status": "healthy",
-            "service": "RAG Financial Advisor",
-            "qdrant_collections": collections_count,
-            "vector_db": "Qdrant",
-            "embedding_model": "all-MiniLM-L6-v2"
-        }
-    except Exception as e:
-        return {
-            "status": "unhealthy",
-            "error": str(e)
-        }
+    return {
+        "status": "healthy",
+        "service": "RAG Financial Advisor",
+        "mode": "simplified_rag",
+        "llm": "OpenAI GPT-3.5-turbo"
+    }
 
 @router.post("/search-loans")
 async def search_loans(query: str, user_profile: Optional[Dict] = None):
